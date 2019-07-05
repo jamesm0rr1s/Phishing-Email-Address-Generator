@@ -521,10 +521,12 @@ def login_to_linkedin(username, password):
         urlOpener.addheaders = [("User-agent", ("Mozilla/5.0"))]
 
         # Open the url with cookie
-        soup = get_soup("https://www.linkedin.com/", urlOpener)
+        #soup = get_soup("https://www.linkedin.com/", urlOpener) # No longer works as of July 2019
+        soup = get_soup("https://www.linkedin.com/login", urlOpener)
 
         # Get the csrf token
-        csrfToken = soup.find(id="loginCsrfParam-login")["value"]
+        #csrfToken = soup.find(id="loginCsrfParam-login")["value"] # No longer works as of July 2019
+        csrfToken = soup.find("input", {"name":"loginCsrfParam"})["value"]
 
 	# Set the login parameters
         loginParameters = urllib.urlencode({"session_key": username, "session_password": password, "loginCsrfParam": csrfToken})
